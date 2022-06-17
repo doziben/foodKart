@@ -1,6 +1,6 @@
 import logo from "../../assets/logo.svg";
 import heroImg from "../../assets/heroImg.png";
-import CartButton from "./cartButton";
+import CartButton from "../cart/cartButton";
 
 export default function Header(props) {
   return (

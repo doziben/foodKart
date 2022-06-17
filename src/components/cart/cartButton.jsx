@@ -1,4 +1,4 @@
-import CartIcon from "./cartIcon";
+import CartIcon from "../layout/cartIcon";
 
 export default function CartButton(props) {
   let count;
