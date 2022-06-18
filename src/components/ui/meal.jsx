@@ -1,9 +1,25 @@
 import Counter from "./counter";
+import { useState } from "react";
+import { useContext } from "react";
+import MealContext from "../../helpers/mealContext";
 
 export default function Meal(props) {
+  const ctx = useContext(MealContext);
+
   const price = `$${props.price}`;
+  const [count, setCount] = useState(0);
+
+  const parseCount = () => {
+    ctx.addMeal({
+      id: props.id,
+      name: props.name,
+      amount: count,
+      price: props.price,
+    });
+  };
+
   const countHandler = (count) => {
-    return count;
+    setCount(count);
   };
 
   return (
@@ -16,7 +32,10 @@ export default function Meal(props) {
         </div>
         <div className="text-right">
           <Counter countHandler={countHandler} />
-          <button className="px-4 py-2 mt-2 text-[white] rounded-lg text-xs font-bold bg-pry hover:bg-[#4D7B2E]">
+          <button
+            onClick={parseCount}
+            className="px-4 py-2 mt-2 text-[white] rounded-lg text-xs font-bold bg-pry hover:bg-[#4D7B2E]"
+          >
             + Add
           </button>
         </div>

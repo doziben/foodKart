@@ -32,6 +32,7 @@ export default function MealList() {
   let mealItems = DUMMY_MEALS.map((e) => (
     <Meal
       key={e.id}
+      id={e.id}
       name={e.name}
       description={e.description}
       price={e.price}
