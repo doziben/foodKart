@@ -7,7 +7,7 @@ export default function Meal(props) {
   const ctx = useContext(MealContext);
 
   const price = `$${props.price}`;
-  const [count, setCount] = useState(0);
+  const [count, setCount] = useState(1);
 
   const parseCount = () => {
     ctx.addMeal({

@@ -13,7 +13,7 @@ export default function Cart() {
   const ctx = useContext(MealContext);
 
   const cartAddHandler = (e) => {
-    ctx.addMeal({ ...e });
+    ctx.addMeal({ ...e, amount: 1 });
   };
   const cartRemoveHandler = (id) => {
     ctx.removeMeal(id);
