@@ -6,6 +6,7 @@ import Meals from "./components/ui/meals";
 import Cart from "./components/cart/cart";
 import CartContext from "./helpers/cartContext";
 import CartProvider from "./helpers/cartProvider";
+import Loader from "./components/ui/loader";
 
 function App() {
   const openCart = () => {

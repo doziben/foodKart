@@ -1,35 +1,41 @@
 import Card from "./card";
 import Meal from "./meal";
+import Loader from "./loader";
+import SERVER_DATABASE from "../../../server/firebase";
+import { useState, useEffect } from "react";
+import { ref, onValue } from "firebase/database";
 
-const DUMMY_MEALS = [
-  {
-    id: "m1",
-    name: "Sushi",
-    description: "Finest fish and veggies",
-    price: 22.99,
-  },
-  {
-    id: "m2",
-    name: "Schnitzel",
-    description: "A german specialty!",
-    price: 16.5,
-  },
-  {
-    id: "m3",
-    name: "Barbecue Burger",
-    description: "American, raw, meaty",
-    price: 12.99,
-  },
-  {
-    id: "m4",
-    name: "Green Bowl",
-    description: "Healthy...and green...",
-    price: 18.99,
-  },
-];
+const dataRef = ref(SERVER_DATABASE);
 
 export default function MealList() {
-  let mealItems = DUMMY_MEALS.map((e) => (
+  const [meals, setMeals] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  const getData = () => {
+    onValue(dataRef, (snapshot) => {
+      const response = snapshot.val();
+      let data = response.meals;
+      const loadedMeals = [];
+
+      for (const key in data) {
+        loadedMeals.push({
+          id: key,
+          name: data[key].name,
+          description: data[key].description,
+          price: data[key].price,
+        });
+      }
+
+      setMeals(loadedMeals);
+      setLoading(false);
+    });
+  };
+
+  useEffect(() => {
+    getData();
+  }, []);
+
+  let mealItems = meals.map((e) => (
     <Meal
       key={e.id}
       id={e.id}
@@ -40,7 +46,8 @@ export default function MealList() {
   ));
   return (
     <Card>
-      <ul className="text-center">{mealItems}</ul>
+      {loading && <Loader />}
+      {!loading && <ul className="animate-slide text-center">{mealItems}</ul>}
     </Card>
   );
 }

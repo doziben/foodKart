@@ -1,3 +1,5 @@
+import Loader from "./loader";
+
 export default function Hero() {
   return (
     <section className="shadow-lg m-auto text-center bg-[white] -mt-40  py-10 px-10 relative max-w-2xl  rounded-2xl">
