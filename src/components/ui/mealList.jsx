@@ -1,39 +1,26 @@
 import Card from "./card";
 import Meal from "./meal";
 import Loader from "./loader";
-import SERVER_DATABASE from "../../../server/firebase";
-import { useState, useEffect } from "react";
-import { ref, onValue } from "firebase/database";
-
-const dataRef = ref(SERVER_DATABASE);
+import useGet from "../../hooks/use-Get";
 
 export default function MealList() {
-  const [meals, setMeals] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const dataHandler = (data) => {
+    const newData = data.meals;
+    const loadedData = [];
 
-  const getData = () => {
-    onValue(dataRef, (snapshot) => {
-      const response = snapshot.val();
-      let data = response.meals;
-      const loadedMeals = [];
+    for (const key in newData) {
+      loadedData.push({
+        id: key,
+        name: newData[key].name,
+        description: newData[key].description,
+        price: newData[key].price,
+      });
+    }
 
-      for (const key in data) {
-        loadedMeals.push({
-          id: key,
-          name: data[key].name,
-          description: data[key].description,
-          price: data[key].price,
-        });
-      }
-
-      setMeals(loadedMeals);
-      setLoading(false);
-    });
+    return loadedData;
   };
 
-  useEffect(() => {
-    getData();
-  }, []);
+  const [meals, loading] = useGet(dataHandler);
 
   let mealItems = meals.map((e) => (
     <Meal

@@ -8,7 +8,7 @@ import MealContext from "../../helpers/mealContext";
 import CartItem from "./CartItem";
 import Checkout from "./checkout";
 import SERVER_DATABASE from "../../../server/firebase";
-import { getDatabase, ref, set } from "firebase/database";
+import { ref, set } from "firebase/database";
 import "./custom.css";
 
 export default function Cart() {
